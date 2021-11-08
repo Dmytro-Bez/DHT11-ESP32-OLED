@@ -1,5 +1,6 @@
 #include"def.h"
 #include"lib.h"
+#include"bme280.h"
 
 DHT dht(DHTPIN, DHTTYPE);
 
@@ -9,7 +10,9 @@ unsigned long currentMillis = 0;                          //Create variable mil.
 unsigned long previousMillis = 0;
 const long interval = 200;                                //Create variable interval
 float h, t;
-Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);             //Create object display
+int altitude;
+Adafruit_SSD1306 display(SCREEN_WIDTH, 
+                        SCREEN_HEIGHT, &Wire, -1);        //Create object display
 
 void init_wire(){                                         //Create function init wire
   Wire.begin();                                           //Init work I2C bus
@@ -34,6 +37,12 @@ void init_sensor(){
   Serial.print(t);
   Serial.println(" *C ");
   /*=====================================*/
+  Serial.print(bme.readPressure() / 133.332);
+  Serial.println(" hPa");
+  altitude = bme.readAltitude(SEALEVELPRESSURE_HPA);
+  Serial.print(altitude);
+  Serial.println(" mm");
+  /*=====================================*/
   init_lcd();
 }
 
@@ -47,5 +56,11 @@ void init_lcd(){
   display.setCursor(0,15);
   display.print("Humidiry: ");   
   display.println(h);
+  display.setCursor(0,30);
+  display.print("Pressure: ");   
+  display.println((bme.readPressure() / 133.332));
+  display.setCursor(0,45);
+  display.print("Altitude: ");   
+  display.println(altitude);
   display.display();
 }
