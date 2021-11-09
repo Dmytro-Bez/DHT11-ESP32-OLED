@@ -1,4 +1,4 @@
-#include"fun.h"
+#include"lib/fun.h"
 
 void setup() {
   Serial.begin(115200); 
