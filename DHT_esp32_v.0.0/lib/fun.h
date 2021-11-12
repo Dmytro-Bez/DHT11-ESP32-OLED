@@ -14,4 +14,20 @@ void init_wire(){                                         //Create function init
     Serial.println("SSD1306 allocation failed");
     for(;;);
   } 
+
+  bool status = bme.begin(0x76);  
+  if (!status) {
+    Serial.println("Could not find a valid BME280 sensor, check wiring!");
+    while (1);
+  }
+
+  if (isnan(h) || isnan(t)) {
+    Serial.println("Failed to read from DHT sensor!");
+    return;
+  }
+}
+
+void send_sensor_date(){
+  send_dht22();
+  send_bme280();
 }

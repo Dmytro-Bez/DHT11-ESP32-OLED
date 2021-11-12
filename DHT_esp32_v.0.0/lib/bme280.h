@@ -1,14 +1,13 @@
 #include"def.h"
 #include"lib.h"
 
+int altitude;
 Adafruit_BME280 bme;
 
-bool init_bme280(){
-  bool status;
-  status = bme.begin(0x76);  
-  if (!status) {
-    Serial.println("Could not find a valid BME280 sensor, check wiring!");
-    while (1);
-  }
-  return status;
+void send_bme280(){
+  Serial.print(bme.readPressure() / VALUE_PRESURE);
+  Serial.println(" hPa");
+  altitude = bme.readAltitude(SEALEVELPRESSURE_HPA);
+  Serial.print(altitude);
+  Serial.println(" mm");
 }
