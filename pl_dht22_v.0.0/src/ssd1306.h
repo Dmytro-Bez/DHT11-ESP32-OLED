@@ -3,7 +3,7 @@
 
 Adafruit_SSD1306 display(SCREEN_WIDTH, 
                         SCREEN_HEIGHT, &Wire, -1);        //Create object display
-void init_lcd(){
+void watch_lcd(){
   display.clearDisplay();                                 //Clear display
   display.setTextSize(1.8);             
   display.setTextColor(WHITE);        
